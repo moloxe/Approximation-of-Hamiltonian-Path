@@ -6,4 +6,4 @@ This algorithm looks for an approximate result (local maximum) for the problem o
 <img src="https://github.com/francoMG/Approximation-of-Hamiltonian-Path/blob/master/test.png"/>
 
 ## Additionally
-If you look for the edge that closes the cycle, you can also consider it as a local solution for the Hamiltonian **Cycle problem**, related to the TSP. To carry out this step it is necessary that the digraph can form at least one cycle.
+If you look for the edge that closes the cycle, you can also consider it as a local solution for the **Hamiltonian Cycle** problem, related to the TSP. To carry out this step it is necessary that the digraph can form at least one cycle.
