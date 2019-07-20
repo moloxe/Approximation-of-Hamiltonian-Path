@@ -1,23 +1,5 @@
 from heapq import heappush, heappop, heapify
 
-def findSet(parent, u):
-    if parent[u] == u:
-        return u
-    parent[u] = findSet(parent, parent[u])
-    return parent[u]
-
-def unionSet(parent, rnk, u, v):
-    u = findSet(parent, u)
-    v = findSet(parent, v)
-    if u != v:
-        if rnk[u] < rnk[v]:
-            temp = u
-            u = v
-            v = temp
-        parent[v] = u
-        if rnk[u] == rnk[v]:
-            rnk[u]+=1
-
 class Edge:
     def __init__(self, _u, _v, _w):
         self.u = _u
@@ -29,51 +11,48 @@ class Edge:
 def AHP(edge, n):
     
     heapify(edge)
-    parent = [i for i in range(n)]
-    rnk = [0 for i in range(n)]
 
     path = []
     restore = []
     vis = [False]*n
     w = 0
-
-    _it = 0
-    while _it < n/2:
-        i = heappop(edge)
-        if findSet(parent, i.u) != findSet(parent, i.v) and not vis[i.u] and not vis[i.v]:
-            vis[i.u] = vis[i.v] = True
-            unionSet(parent, rnk, i.u, i.v)
-            path.append((i.u,i.v))
-            # print(path)
-            w += i.w
-            _it += 1
-        else:
-            restore.append(Edge(i.u,i.v,i.w))
     
-    for i in restore:
-        heappush(edge, Edge(i.u, i.v, i.w))
+    i = 0
+    while i < n/2:
+        e = heappop(edge)
+        if not vis[e.u] and not vis[e.v]:
+            vis[e.u] = vis[e.v] = True
+            path.append((e.u,e.v))
+            print(path)
+            w += e.w
+            i += 1
+        else:
+            restore.append(Edge(e.u,e.v,e.w))
+    
+    for e in restore:
+      heappush(edge, Edge(e.u, e.v, e.w))
     
     vis = [False]*n
     
-    _it = 0
-    while _it < n/2-1:
-        i = heappop(edge)
-        if findSet(parent, i.u) != findSet(parent, i.v) and not vis[i.u] and not vis[i.v]:
-            vis[i.u] = vis[i.v] = True
-            unionSet(parent, rnk, i.u, i.v)
-            path.append((i.u, i.v))
-            # print(path)
-            w += i.w
-            _it += 1
+    i = 0
+    while i < n/2-1:
+        e = heappop(edge)
+        if not vis[e.u] and not vis[e.v]:
+            vis[e.u] = vis[e.v] = True
+            path.append((e.u, e.v))
+            print(path)
+            w += e.w
+            i += 1
     
-    # local Hamiltonian Cycle
-    # for i in range(n):
-    #     if not vis[i]:
-    #         for j in range(i+1, n):
-    #             if not vis[j]:
-    #                 path.append((i, j))
-    #                 break
-    #         break
+    # Approximation-of-Hamiltonian-Cycle
+    # freq = [0]*n
+    # for p in path:
+    #   freq[p[0]] += 1
+    #   freq[p[1]] += 1
+    # u = freq.index(1)
+    # freq[freq.index(1)] = 2
+    # v = freq.index(1)
+    # path.append((u, v))
 
     return path, w
 
