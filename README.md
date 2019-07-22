@@ -1,5 +1,5 @@
 # Approximation-of-Hamiltonian-Path
-This algorithm looks for an approximate result (local maximum) for the problem of the Hamiltonian Path, involves the techniques observed in the Kruskal algorithm. **The time complexity of the present algorithm is O(n log n)**, with "n" as the number of nodes.
+This algorithm looks for an approximate result (local maximum) for the problem of the Hamiltonian Path, involves the techniques observed in the Kruskal algorithm. **The time complexity of the present algorithm is O (E log E)**, with "E" as the number of edges.
 
 ## Algorithm testing
 
