@@ -1,5 +1,23 @@
 from heapq import heappush, heappop, heapify
 
+def findSet(parent, u):
+    if parent[u] == u:
+        return u
+    parent[u] = findSet(parent, parent[u])
+    return parent[u]
+
+def unionSet(parent, rnk, u, v):
+    u = findSet(parent, u)
+    v = findSet(parent, v)
+    if u != v:
+        if rnk[u] < rnk[v]:
+            temp = u
+            u = v
+            v = temp
+        parent[v] = u
+        if rnk[u] == rnk[v]:
+            rnk[u]+=1
+
 class Edge:
     def __init__(self, _u, _v, _w):
         self.u = _u
@@ -12,6 +30,8 @@ def AHP(edge, n):
     
     heapify(edge)
 
+    parent = [i for i in range(n)]
+    rnk = [0 for i in range(n)]
     path = []
     restore = []
     vis = [False]*n
@@ -20,8 +40,9 @@ def AHP(edge, n):
     i = 0
     while i < n/2:
         e = heappop(edge)
-        if not vis[e.u] and not vis[e.v]:
+        if findSet(parent, e.u) != findSet(parent, e.v) and not vis[e.u] and not vis[e.v]:
             vis[e.u] = vis[e.v] = True
+            unionSet(parent, rnk, e.u, e.v)
             path.append((e.u,e.v))
             print(path)
             w += e.w
@@ -37,8 +58,9 @@ def AHP(edge, n):
     i = 0
     while i < n/2-1:
         e = heappop(edge)
-        if not vis[e.u] and not vis[e.v]:
+        if findSet(parent, e.u) != findSet(parent, e.v) and not vis[e.u] and not vis[e.v]:
             vis[e.u] = vis[e.v] = True
+            unionSet(parent, rnk, e.u, e.v)
             path.append((e.u, e.v))
             print(path)
             w += e.w
@@ -66,7 +88,7 @@ edge = [ # u, v, w
 ]
 
 for e in edge:
-  print(e.u, "->", e.v, ", W:", e.w)
+  print(e.u, "<->", e.v, ", W:", e.w)
 
 path, w = AHP(edge, 4)
 print("Final result", path, "TW:", w)
