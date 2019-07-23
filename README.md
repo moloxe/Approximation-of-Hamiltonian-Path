@@ -5,7 +5,7 @@ This algorithm looks for an approximate result (local maximum) for the problem o
 ### Step 1
 Add the two nodes with the shortest distance to the solution with the condition that the selected nodes have not been visited and also belong to a different set, the selected nodes are marked as visited and their sets are joined. Repeat until accumulating n/2 edges.
 ### Step 2
-Mark the visited list in false and add the two nodes with the shortest distance to the solution with the same condition. Repeat until n-1 edges are reached.
+All edges that were not used in the first step should be considered for this step. Mark the visited list in false and add the two nodes with the shortest distance to the solution with the same condition. Repeat until n-1 edges are reached.
 
 ## Simulation
 
